@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/check-auth`, {
+      const { data } = await axios.get('https://rugas-orm-client.onrender.com/api/auth/check-auth', {
         withCredentials: true
       });
       setUser(data.user);
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, credentials, {
+      await axios.post('https://rugas-orm-client.onrender.com/api/auth/login', credentials, {
         withCredentials: true
       });
       
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/logout`, {}, {
+    await axios.post('https://rugas-orm-client.onrender.com/api/auth/logout', {}, {
       withCredentials: true
     });
     setUser(null);
