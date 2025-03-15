@@ -7,8 +7,7 @@ import CustomerOnboarding from './components/CustomerOnboarding/CustomerOnboardi
 import ProductList from './components/ProductList/ProductList';
 import OrderCreation from './components/OrderCreation/OrderCreation';
 import Orders from './components/OrdersList/Orders';
-import dotenv from 'dotenv';
-dotenv.config();
+
 
 function App() {
   return (
