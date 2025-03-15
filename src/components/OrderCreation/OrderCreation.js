@@ -18,7 +18,7 @@ function OrderCreation() {
 
   const fetchCustomers = async () => {
     try {
-      const response = await fetch('https://rugas-orm-client.onrender.com/api/customers', {
+      const response = await fetch('https://rugas-orm-server.onrender.com/api/customers', {
         credentials: 'include'
       });
       if (!response.ok) throw new Error('Failed to fetch customers');
@@ -31,7 +31,7 @@ function OrderCreation() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('https://rugas-orm-client.onrender.com/api/products', {
+      const response = await fetch('https://rugas-orm-server.onrender.com/api/products', {
         credentials: 'include'
       });
       
@@ -98,7 +98,7 @@ function OrderCreation() {
     }
 
     try {
-      const response = await fetch('https://rugas-orm-client.onrender.com/api/orders', {
+      const response = await fetch('https://rugas-orm-server.onrender.com/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

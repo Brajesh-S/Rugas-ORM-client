@@ -39,7 +39,7 @@ function ProductList() {
         formPayload.append('image', formData.image);
       }
   
-      const response = await fetch('https://rugas-orm-client.onrender.com/api/products', {
+      const response = await fetch('https://rugas-orm-server.onrender.com/api/products', {
         method: 'POST',
         credentials: 'include',
         body: formPayload
@@ -81,7 +81,7 @@ function ProductList() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('https://rugas-orm-client.onrender.com/api/products', {
+      const response = await fetch('https://rugas-orm-server.onrender.com/api/products', {
         credentials: 'include'
       });
       

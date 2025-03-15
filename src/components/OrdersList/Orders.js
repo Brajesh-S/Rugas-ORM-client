@@ -23,7 +23,7 @@ function OrdersPage() {
     const fetchOrders = async () => {
       try {
         const queryParams = new URLSearchParams(filters).toString();
-        const response = await fetch(`https://rugas-orm-client.onrender.com/api/orders?${queryParams}`, {
+        const response = await fetch(`https://rugas-orm-server.onrender.com/api/orders?${queryParams}`, {
           credentials: 'include'
         });
         if (!response.ok) throw new Error('Failed to fetch orders');
@@ -42,7 +42,7 @@ function OrdersPage() {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const response = await fetch(`https://rugas-orm-client.onrender.com/api/orders/${orderId}`, {
+        const response = await fetch(`https://rugas-orm-server.onrender.com/api/orders/${orderId}`, {
           credentials: 'include'
         });
         if (!response.ok) throw new Error('Failed to fetch order');
@@ -59,7 +59,7 @@ function OrdersPage() {
 
   const handleStatusUpdate = async (newStatus, orderId) => {
     try {
-      const response = await fetch(`https://rugas-orm-client.onrender.com/api/orders/${orderId}/status`, {
+      const response = await fetch(`https://rugas-orm-server.onrender.com/api/orders/${orderId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
