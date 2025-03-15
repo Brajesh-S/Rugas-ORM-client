@@ -61,7 +61,7 @@ function CustomerOnboarding() {
     
     setIsSubmitting(true);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/customers`, {
+      const response = await fetch('https://rugas-orm-client.onrender.com/api/customers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
