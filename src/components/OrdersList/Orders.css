@@ -1,0 +1,260 @@
+
+.orders-container {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .order-list {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  
+  .header {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+  }
+  
+
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .filters select,
+  .filters input {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+  
+  .orders-table {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .table-header {
+    display: grid;
+    grid-template-columns: minmax(120px, 250px) minmax(160px, 1fr) repeat(3, minmax(100px, 1fr));
+    padding: 1rem;
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+    min-width: 800px;
+  }
+  
+  .order-row {
+    display: grid;
+    overflow-x: auto;
+    grid-template-columns: minmax(250px, 200px) minmax(160px, 1fr) repeat(3, minmax(100px, 1fr));
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+    min-width: 800px;
+  }
+  
+  .order-row:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .status-indicator {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    border: none;
+    font-size: 0.85rem;
+    cursor: pointer;
+    max-width: 120px;
+  }
+  
+  .status-indicator.pending { background: #ffeeba; color: #856404; }
+  .status-indicator.shipped { background: #c3e6cb; color: #155724; }
+  .status-indicator.delivered { background: #d4edda; color: #155724; }
+  .status-indicator.cancelled { background: #f8d7da; color: #721c24; }
+  
+  .view-details-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+  
+  .view-details-btn:hover {
+    background: #0056b3;
+  }
+  
+  .order-detail {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+  }
+  
+  .back-button:hover {
+    text-decoration: underline;
+  }
+  
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .order-header h2 {
+    margin: 0;
+    color: #333;
+  }
+  
+  .status-select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+  }
+  
+  .customer-info {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .customer-info h3 {
+    margin-top: 0;
+    color: #333;
+  }
+  
+  .order-items {
+    margin-bottom: 1.5rem;
+  }
+  
+  .order-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+  }
+  
+  .order-item img {
+    max-width: 80px;
+    height: auto;
+    border-radius: 4px;
+  }
+  
+  .item-info {
+    flex-grow: 1;
+  }
+  
+  .item-info h4 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+  }
+  
+  .order-summary {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+  }
+  
+  .order-summary h3 {
+    margin-top: 0;
+  }
+  
+  .order-summary p {
+    margin: 0.5rem 0;
+  }
+  
+  .total {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  @media (max-width: 768px) {
+    .orders-container {
+      padding: 0.5rem;
+    }
+  
+    .table-header {
+      display: none;
+    }
+  
+    .order-row {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+      padding: 1rem;
+      position: relative;
+      
+    }
+  
+    .order-row span:last-child {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      
+    }
+  
+    .status-indicator {
+      max-width: 100%;
+    }
+  
+    .order-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .order-item img {
+      max-width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .filters {
+      grid-template-columns: 1fr;
+    }
+  
+    .status-select {
+      width: 100%;
+    }
+  
+    .order-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }
+  

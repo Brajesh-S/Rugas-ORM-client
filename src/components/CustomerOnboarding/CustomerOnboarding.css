@@ -1,0 +1,170 @@
+
+.customer-onboarding {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  .customer-card {
+    
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    transition: all 0.3s ease;
+  }
+  
+  .card h2 {
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+    font-weight: 500;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+  }
+  
+  .form-input.invalid {
+    border-color: #fc8181;
+    background-color: #fff5f5;
+  }
+  
+  .form-input.invalid:focus {
+    box-shadow: 0 0 0 3px rgba(252, 129, 129, 0.1);
+  }
+  
+  .error-message {
+    color: #fc8181;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+  }
+  
+  .hint {
+    color: #718096;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    display: block;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+  }
+  
+  .btn-primary {
+    background: #4299e1;
+    color: white;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background: #3182ce;
+  }
+  
+  .btn-primary:disabled {
+    background: #cbd5e0;
+    cursor: not-allowed;
+  }
+  
+  .btn-cancel {
+    background: #e2e8f0;
+    color: #2d3748;
+    border: none;
+  }
+  
+  .btn-cancel:hover {
+    background: #cbd5e0;
+  }
+  
+  .btn-cancel:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    .card {
+      padding: 1.5rem;
+    }
+  
+    .card h2 {
+      font-size: 1.5rem;
+    }
+  
+    .form-actions {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  
+    .btn {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .customer-onboarding {
+      padding: 0 0.5rem;
+    }
+  
+    .card {
+      padding: 1rem;
+      border-radius: 8px;
+    }
+  
+    .form-input {
+      padding: 0.65rem 0.9rem;
+      font-size: 0.9rem;
+    }
+  
+    .btn {
+      padding: 0.65rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+  
+  .invalid {
+    animation: shake 0.3s ease-in-out;
+  }
+
+  
