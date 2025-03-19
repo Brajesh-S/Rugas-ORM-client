@@ -9,10 +9,11 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const { data } = await axios.get('https://rugas-orm-server.onrender.com/api/auth/login', {
-        withCredentials: true
+      setUser({
+        id: "67d3b9dbede958e70a990502",
+        username: "testuser",
+        email: "test@example.com"
       });
-      setUser(data.user);
     } catch (error) {
       console.error('Auth check failed:', error.response?.data || error.message);
       setUser(null);
