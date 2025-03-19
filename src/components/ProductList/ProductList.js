@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './ProductList.css'
+import './ProductList.css';
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -14,6 +14,11 @@ function ProductList() {
     image: null
   });
   const [formError, setFormError] = useState('');
+
+  const getAuthToken = () => {
+    return localStorage.getItem('token'); 
+  };
+
   const handleAddProduct = () => {
     setShowForm(true);
   };
@@ -38,18 +43,22 @@ function ProductList() {
       if (formData.image) {
         formPayload.append('image', formData.image);
       }
-  
+
+      const token = getAuthToken();
       const response = await fetch('https://rugas-orm-server.onrender.com/api/products', {
         method: 'POST',
         credentials: 'include',
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
         body: formPayload
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to create product');
       }
-  
+
       const newProduct = await response.json();
       
       const formattedProduct = {
@@ -59,7 +68,7 @@ function ProductList() {
           data: newProduct.image.data
         } : null
       };
-  
+
       setProducts([...products, formattedProduct]);
       setShowForm(false);
       setFormData({
@@ -81,16 +90,20 @@ function ProductList() {
 
   const fetchProducts = async () => {
     try {
+      const token = getAuthToken();
       const response = await fetch('https://rugas-orm-server.onrender.com/api/products', {
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
-      
+
       if (response.status === 401) {
         throw new Error('Please login to view products');
       }
-      
+
       if (!response.ok) throw new Error('Failed to fetch products');
-      
+
       const data = await response.json();
       setProducts(data);
     } catch (err) {
@@ -177,7 +190,7 @@ function ProductList() {
         </form>
       )}
       <div className="grid">
-      {products.map(product => (
+        {products.map(product => (
           <div key={product._id} className="card">
             {product.image?.data && (
               <img

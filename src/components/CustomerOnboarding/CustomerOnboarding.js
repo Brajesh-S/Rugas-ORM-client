@@ -22,7 +22,6 @@ function CustomerOnboarding() {
       newErrors.name = 'Name must be at least 2 characters';
     }
 
-  
     if (!formData.address.trim()) {
       newErrors.address = 'Address is required';
     } else if (formData.address.trim().length < 5) {
@@ -34,7 +33,6 @@ function CustomerOnboarding() {
     } else if (!phoneRegex.test(formData.phone)) {
       newErrors.phone = 'Invalid phone number format';
     }
-
 
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
@@ -49,7 +47,7 @@ function CustomerOnboarding() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
+
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -60,24 +58,34 @@ function CustomerOnboarding() {
     if (!validateForm()) return;
     
     setIsSubmitting(true);
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('You are not authenticated. Please log in.');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const response = await fetch('https://rugas-orm-server.onrender.com/api/customers', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-        credentials: 'include'
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` 
+        },
+        body: JSON.stringify(formData)
       });
-  
+
       const contentType = response.headers.get('content-type');
       let data;
-      
+
       if (contentType && contentType.includes('application/json')) {
         data = await response.json();
       } else {
         const text = await response.text();
         throw new Error(text || 'Invalid server response');
       }
-  
+
       if (!response.ok) {
         throw new Error(data.message || 'Failed to save customer');
       }
@@ -143,7 +151,6 @@ function CustomerOnboarding() {
             pattern="^(\+?\d{1,3}[- ]?)?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}$"
           />
           {errors.phone && <div className="error-message">{errors.phone}</div>}
-
         </div>
 
         <div className="form-group">

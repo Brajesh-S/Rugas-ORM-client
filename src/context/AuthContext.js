@@ -8,13 +8,22 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const checkAuth = async () => {
+    const token = localStorage.getItem('token'); 
+
+    if (!token) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
     try {
       const { data } = await axios.get('https://rugas-orm-server.onrender.com/api/auth/check-auth', {
-        withCredentials: true
+        headers: { Authorization: `Bearer ${token}` }
       });
       setUser(data.user);
     } catch (error) {
       console.error('Auth check failed:', error.response?.data || error.message);
+      localStorage.removeItem('token'); 
       setUser(null);
     } finally {
       setLoading(false);
@@ -27,10 +36,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      await axios.post('https://rugas-orm-server.onrender.com/api/auth/login', credentials, {
-        withCredentials: true
-      });
-      
+      const { data } = await axios.post('https://rugas-orm-server.onrender.com/api/auth/login', credentials);
+      localStorage.setItem('token', data.token);
       await checkAuth();
     } catch (error) {
       console.error('Login failed:', error.response?.data || error.message);
@@ -38,11 +45,8 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = async () => {
-    await axios.post('https://rugas-orm-server.onrender.com/api/auth/logout', {
-      
-      withCredentials: true
-    });
+  const logout = () => {
+    localStorage.removeItem('token'); 
     setUser(null);
   };
 

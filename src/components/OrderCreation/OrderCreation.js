@@ -18,8 +18,12 @@ function OrderCreation() {
 
   const fetchCustomers = async () => {
     try {
+      const token = localStorage.getItem('token'); 
       const response = await fetch('https://rugas-orm-server.onrender.com/api/customers', {
-        credentials: 'include'
+        headers: {
+          Authorization: `Bearer ${token}`
+          
+        }
       });
       if (!response.ok) throw new Error('Failed to fetch customers');
       const data = await response.json();
@@ -28,21 +32,26 @@ function OrderCreation() {
       setError('Error loading customers');
     }
   };
+  
 
   const fetchProducts = async () => {
     try {
+      const token = localStorage.getItem('token'); 
       const response = await fetch('https://rugas-orm-server.onrender.com/api/products', {
-        credentials: 'include'
+        headers: {
+          'Authorization': `Bearer ${token}`, 
+          'Content-Type': 'application/json'
+        }
       });
-      
+  
       if (response.status === 401) {
         throw new Error('Please login to view products');
       }
-      
+  
       if (!response.ok) throw new Error('Failed to fetch products');
-      
+  
       const data = await response.json();
-
+  
       const productsWithImages = data.map(product => ({
         ...product,
         image: product.image ? {
@@ -50,7 +59,7 @@ function OrderCreation() {
           data: product.image.data.toString('base64')
         } : null
       }));
-      
+  
       setProducts(productsWithImages);
     } catch (err) {
       setError(err.message);
@@ -96,11 +105,13 @@ function OrderCreation() {
       setError('Please add products to cart');
       return;
     }
-
+  
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch('https://rugas-orm-server.onrender.com/api/orders', {
         method: 'POST',
         headers: {
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         credentials: 'include',
@@ -113,13 +124,13 @@ function OrderCreation() {
           totalPrice: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)
         })
       });
-
+  
       const responseData = await response.json();
-      
+  
       if (!response.ok) {
         throw new Error(responseData.message || 'Failed to create order');
       }
-      
+  
       navigate('/dashboard/orders');
     } catch (error) {
       setError(error.message || 'Error creating order');

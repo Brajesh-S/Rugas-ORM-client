@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './Orders.css';
 
 function bufferToBase64(bufferData) {
@@ -15,17 +15,25 @@ function OrdersPage() {
   const [filters, setFilters] = useState({
     status: '',
     customerName: '',
-    category: ''
+    category: '',
   });
   const [loading, setLoading] = useState(true);
+
+  const getAuthToken = () => {
+    return localStorage.getItem('token'); 
+  };
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const queryParams = new URLSearchParams(filters).toString();
         const response = await fetch(`https://rugas-orm-server.onrender.com/api/orders?${queryParams}`, {
-          credentials: 'include'
+          headers: {
+           'Authorization': `Bearer ${getAuthToken()}`, 
+            'Content-Type': 'application/json',
+          },
         });
+
         if (!response.ok) throw new Error('Failed to fetch orders');
         const data = await response.json();
         setOrders(data);
@@ -43,8 +51,13 @@ function OrdersPage() {
     const fetchOrderDetails = async () => {
       try {
         const response = await fetch(`https://rugas-orm-server.onrender.com/api/orders/${orderId}`, {
-          credentials: 'include'
+         
+          headers: {
+           'Authorization': `Bearer ${getAuthToken()}`,
+            'Content-Type': 'application/json',
+          },
         });
+
         if (!response.ok) throw new Error('Failed to fetch order');
         const data = await response.json();
         setSelectedOrder(data);
@@ -61,17 +74,20 @@ function OrdersPage() {
     try {
       const response = await fetch(`https://rugas-orm-server.onrender.com/api/orders/${orderId}/status`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ status: newStatus })
+        headers: {
+          'Authorization': `Bearer ${getAuthToken()}`,
+          'Content-Type': 'application/json',
+        },
+  
+        body: JSON.stringify({ status: newStatus }),
       });
 
       if (!response.ok) throw new Error('Failed to update status');
       const updatedOrder = await response.json();
       setSelectedOrder(updatedOrder);
-      setOrders(prev => prev.map(order => 
-        order._id === updatedOrder._id ? updatedOrder : order
-      ));
+      setOrders(prev =>
+        prev.map(order => (order._id === updatedOrder._id ? updatedOrder : order))
+      );
     } catch (error) {
       console.error('Error updating status:', error);
     }
@@ -90,15 +106,10 @@ function OrdersPage() {
         <div className="order-list">
           <div className="header">
             <h2>Orders</h2>
-
           </div>
 
           <div className="filters">
-            <select
-              name="status"
-              value={filters.status}
-              onChange={handleFilterChange}
-            >
+            <select name="status" value={filters.status} onChange={handleFilterChange}>
               <option value="">All Statuses</option>
               <option value="placed">Placed</option>
               <option value="shipped">Shipped</option>
@@ -114,11 +125,7 @@ function OrdersPage() {
               onChange={handleFilterChange}
             />
 
-            <select
-              name="category"
-              value={filters.category}
-              onChange={handleFilterChange}
-            >
+            <select name="category" value={filters.category} onChange={handleFilterChange}>
               <option value="">All Categories</option>
               <option value="electronics">Electronics</option>
               <option value="clothing">Clothing</option>
@@ -137,7 +144,7 @@ function OrdersPage() {
 
             {orders.map(order => (
               <div key={order._id} className="order-row">
-                 <span>{order._id}</span> 
+                <span>{order._id}</span>
                 <span>{order.customerName}</span>
                 <span>${order.totalPrice?.toFixed(2)}</span>
                 <span>
@@ -153,10 +160,7 @@ function OrdersPage() {
                   </select>
                 </span>
                 <span>
-                  <button 
-                    onClick={() => navigate(`/dashboard/orders/${order._id}`)}
-                    className="view-details-btn"
-                  >
+                  <button onClick={() => navigate(`/dashboard/orders/${order._id}`)} className="view-details-btn">
                     View
                   </button>
                 </span>
@@ -165,13 +169,9 @@ function OrdersPage() {
           </div>
         </div>
       ) : (
-
         selectedOrder && (
           <div className="order-detail">
-            <button 
-              onClick={() => navigate('/dashboard/orders')}
-              className="back-button"
-            >
+            <button onClick={() => navigate('/dashboard/orders')} className="back-button">
               ← Back to Orders
             </button>
 
@@ -179,7 +179,7 @@ function OrdersPage() {
               <h2>Order #{selectedOrder.orderNumber}</h2>
               <select
                 value={selectedOrder.status}
-                onChange={(e) => handleStatusUpdate(e.target.value, selectedOrder._id)} 
+                onChange={(e) => handleStatusUpdate(e.target.value, selectedOrder._id)}
                 className={`status-select ${selectedOrder.status}`}
               >
                 <option value="placed">Placed</option>
@@ -200,10 +200,9 @@ function OrdersPage() {
               <h3>Order Items</h3>
               {selectedOrder.products?.map(item => (
                 <div key={item._id} className="order-item">
-                  <img 
-                   src={`data:${item.product.image.contentType};base64,${bufferToBase64(item.product.image.data)}`} 
-                   alt={item.product.name}
-                   
+                  <img
+                    src={`data:${item.product.image.contentType};base64,${bufferToBase64(item.product.image.data)}`}
+                    alt={item.product.name}
                   />
                   <div className="item-info">
                     <h4>{item.product.name}</h4>
@@ -213,14 +212,6 @@ function OrdersPage() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="order-summary">
-              <h3>Order Summary</h3>
-              <p>Subtotal: ${selectedOrder.subtotal?.toFixed(2)}</p>
-              <p>Shipping: ${selectedOrder.shipping?.toFixed(2)}</p>
-              <p>Tax: ${selectedOrder.tax?.toFixed(2)}</p>
-              <p className="total">Total: ${selectedOrder.total?.toFixed(2)}</p>
             </div>
           </div>
         )
