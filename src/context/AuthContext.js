@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
       });
       setUser(data.user);
     } catch (error) {
+      console.error('Auth check failed:', error.response?.data || error.message);
       setUser(null);
     } finally {
       setLoading(false);
@@ -32,12 +33,14 @@ export const AuthProvider = ({ children }) => {
       
       await checkAuth();
     } catch (error) {
+      console.error('Login failed:', error.response?.data || error.message);
       throw new Error('Login failed');
     }
   };
 
   const logout = async () => {
-    await axios.post('https://rugas-orm-server.onrender.com/api/auth/logout', {}, {
+    await axios.post('https://rugas-orm-server.onrender.com/api/auth/logout', {
+      
       withCredentials: true
     });
     setUser(null);
