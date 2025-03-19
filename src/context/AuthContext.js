@@ -10,7 +10,11 @@ export const AuthProvider = ({ children }) => {
   const checkAuth = async () => {
     try {
       const { data } = await axios.get('https://rugas-orm-server.onrender.com/api/auth/check-auth', {
-        withCredentials: true
+        withCredentials: true,
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
       });
       setUser(data.user);
     } catch (error) {
