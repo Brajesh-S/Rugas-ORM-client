@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Login from './components/LoginPage/Login';
-import ProtectedRoute from './components/ProtectedRoute';
+// import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './components/Dashboard/Dashboard';
 import CustomerOnboarding from './components/CustomerOnboarding/CustomerOnboarding';
 import ProductList from './components/ProductList/ProductList';
@@ -17,9 +17,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           
           <Route path="/dashboard" element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+              
+            // </ProtectedRoute>
+            <Dashboard />
           }>
       
             <Route index element={<Navigate to="customers" replace />} />
