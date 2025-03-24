@@ -34,6 +34,34 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
+  const signup = async (credentials) => {
+    try {
+      const response = await fetch('https://rugas-orm-server.onrender.com/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Signup failed. Please try again.');
+      }
+
+      if (!data.token || !data.user) {
+        throw new Error('Invalid server response');
+      }
+
+      localStorage.setItem('token', data.token);
+      setUser(data.user);
+      return data;
+
+    } catch (error) {
+      console.error('Signup error:', error);
+      throw error;
+    }
+  };
+
   const login = async (credentials) => {
     try {
       const { data } = await axios.post('https://rugas-orm-server.onrender.com/api/auth/login', credentials);
@@ -51,7 +79,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, signup, login, logout }}>
       {!loading && children}
     </AuthContext.Provider>
   );

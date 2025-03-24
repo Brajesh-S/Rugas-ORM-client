@@ -67,18 +67,40 @@
   .btn-primary:hover {
     background: #5b4bc4;
   }
+
+.toggle-auth {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.toggle-auth span {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.error {
+  width:auto;
+  text-align: center;
+  color: #dc3545;
+  margin-bottom: 0.7rem;
+  padding: 0.25rem;
+  background-color: #f8d7da;
+  border-radius: 4px;
+  font-size: smaller;
+}
+
+.success {
+  width:auto;
+  text-align: center;
+  color: #28a745;
+  margin-bottom: 0.7rem;
+  padding: 0.25rem;
+  background-color: #d4edda;
+  border-radius: 4px;
+  font-size: smaller;
+}
   
-  .error {
-    background: #ff6b6b;
-    color: white;
-    padding: 0.8rem;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    font-weight: 500;
-  }
-  
-  /* Responsive Design */
   @media (max-width: 768px) {
     .login-container {
       padding: 1rem;
