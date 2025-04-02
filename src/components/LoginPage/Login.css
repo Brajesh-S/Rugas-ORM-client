@@ -62,12 +62,20 @@
     font-weight: 600;
     cursor: pointer;
     transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
   
   .btn-primary:hover {
     background: #5b4bc4;
   }
-
+  .btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
 .toggle-auth {
   text-align: center;
   margin-top: 1rem;

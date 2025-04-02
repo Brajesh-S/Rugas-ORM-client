@@ -5,9 +5,10 @@ import './Login.css';
 
 function Login() {
   const [isLogin, setIsLogin] = useState(true);
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const [credentials, setCredentials] = useState({ username: '', email: '', password: '' });
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(false); 
   const navigate = useNavigate();
   const { login, signup } = useAuth();
 
@@ -25,16 +26,18 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true); 
 
     if (!credentials.email || !credentials.password) {
       setError('Please fill in all fields');
+      setLoading(false); 
       return;
     }
     if (!isLogin && (!credentials.username || !credentials.email || !credentials.password)) {
       setError('Please fill in all fields');
+      setLoading(false); 
       return;
     }
-
 
     try {
       if (isLogin) {
@@ -49,6 +52,8 @@ function Login() {
     } catch (err) {
       setCredentials({ username: '', email: '', password: '' });
       setError(err.message || (isLogin ? 'Invalid credentials' : 'Signup failed'));
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -98,9 +103,11 @@ function Login() {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">
-          {isLogin ? 'Login' : 'Sign Up'}
+        <button type="submit" className="btn btn-primary" disabled={loading}>
+          {loading ? 'Loading...' : (isLogin ? 'Login' : 'Sign Up')}
         </button>
+
+        {loading && <div className="spinner"></div>} 
 
         <div className="toggle-auth">
           {isLogin ? (
@@ -113,4 +120,5 @@ function Login() {
     </div>
   );
 }
+
 export default Login;
